@@ -33,7 +33,7 @@ const Index = () => {
     try {
       event.preventDefault();
       const res = await axiosReq.post(`/posts`, payload);
-      if (res.status === 200) {
+      if (res.status === 201) {
         dispatch(addItem(res.data));
         setOpen(false);
       }
