@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosts, addItem, setError } from '../redux/slice';
 import { axiosReq } from '../../axios';
 import { Card, Modal, Alert } from "../components";
+import { UnknownAction } from '@reduxjs/toolkit';
 
 const myFont = localFont({ src: '../font/Neutra Text Light.otf' });
 
@@ -19,12 +20,12 @@ const Index = () => {
   const error = useSelector((state: RootState) => state.store.error);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchPosts() as any);
+    dispatch(fetchPosts() as unknown as UnknownAction);
   }, []);
 
   useEffect(() => {
     if (error) {
-      const timeout = setTimeout(() => dispatch(setError(false)), 3000);
+      setTimeout(() => dispatch(setError(false)), 3000);
     }
   }, [error]);
 
@@ -37,6 +38,7 @@ const Index = () => {
         setOpen(false);
       }
     } catch (error) {
+      console.log(error);
       dispatch(setError(true));
       setOpen(false);
     }
